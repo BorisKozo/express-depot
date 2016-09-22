@@ -5,8 +5,6 @@
  */
 var subdivision = require('subdivision');
 var path = require('path');
-var debug = require('debug')('express-plugin-demo:server');
-var http = require('http');
 
 subdivision.readManifestFiles(path.join(__dirname, '..', 'plugins', '*', 'manifest.js'));
 subdivision.start();
