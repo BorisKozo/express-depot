@@ -4,6 +4,9 @@ var http = require('http');
 var express = require('express');
 
 var app = express();
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
 module.exports = {
     initialize(){
         return new Promise((resolve) => {
@@ -63,5 +66,13 @@ module.exports = {
             server.on('error', onError);
             server.on('listening', onListening);
         });
+    },
+
+    addRoute(verb, route, handler){
+        app[verb](route, handler);
+    },
+
+    addMiddleware(handler){
+        app.use(handler);
     }
 };

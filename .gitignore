@@ -13,3 +13,4 @@ npm-debug.log
 *.orig
 *.dump
 /demo-subdivision/.idea
+/.idea
