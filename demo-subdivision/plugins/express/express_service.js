@@ -2,6 +2,7 @@ var path = require('path');
 var debug = require('debug')('express-plugin-demo:server');
 var http = require('http');
 var express = require('express');
+var subdivision = require('subdivision');
 
 var app = express();
 app.set('views', path.join(__dirname, 'views'));
@@ -15,7 +16,12 @@ module.exports = {
                 var bind = typeof addr === 'string'
                     ? 'pipe ' + addr
                     : 'port ' + addr.port;
+                debug('Building routes');
+                subdivision.build('express/middleware', {app});
+                subdivision.build('express/routes', {app});
+                subdivision.build('express/routers', {app});
                 debug('Listening on ' + bind);
+
                 resolve();
             }
 
@@ -68,11 +74,11 @@ module.exports = {
         });
     },
 
-    addRoute(verb, route, handler){
-        app[verb](route, handler);
-    },
-
-    addMiddleware(handler){
-        app.use(handler);
+    buildRouter(routerPath){
+        const router = express.Router();
+        subdivision.build(routerPath, {
+            app: router
+        });
+        return router;
     }
 };

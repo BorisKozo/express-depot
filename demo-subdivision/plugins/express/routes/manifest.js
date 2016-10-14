@@ -1,34 +1,54 @@
 const subdivision = require('subdivision');
-const routes = require('./index');
-var users = require('./users');
+const middleware = require('./middleware');
+const index = require('./index');
+const users = require('./users');
 
-// catch 404 and forward to error handler
-app.use();
 
 module.exports = {
     paths: [
         {
-            path: 'express',
+            path: 'express/middleware',
+            addins: [
+                {
+                    type: 'express middleware array',
+                    handlers: middleware
+                },
+
+            ]
+        },
+        {
+            path: 'express/routers',
+            type: 'express router',
+            addins: [
+                {
+                    route: '/',
+                    routerPath: 'express/routes/index'
+                },
+                {
+                    route: '/users',
+                    routerPath: 'express/routes/users'
+                }
+            ]
+        },
+        {
+            path: 'express/routes/index',
             addins: [
                 {
                     type: 'express route',
-                    verb: 'use',
+                    verb: 'get',
                     route: '/',
-                    handler: routes
-                },
+                    handler: index.main
+                }
+            ]
+        },
+        {
+            path: 'express/routes/users',
+            addins: [
                 {
                     type: 'express route',
-                    verb: 'use',
-                    route: '/users',
-                    handler: users
-                },
-                {
-                    type: 'express middleware',
-                    handler(req, res, next) {
-                        var err = new Error('Not Found');
-                        err.status = 404;
-                        next(err);
-                    }
+                    verb: 'get',
+                    route: '/',
+                    handler: users.user
                 }
             ]
         }

@@ -6,6 +6,6 @@
 var subdivision = require('subdivision');
 var path = require('path');
 
-subdivision.readManifestFiles(path.join(__dirname, '..', 'plugins', '*', 'manifest.js'));
+subdivision.readManifestFiles(path.join(__dirname, '..', 'plugins', '**', 'manifest.js'));
 subdivision.start();
 

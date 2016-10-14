@@ -19,23 +19,29 @@ module.exports = {
             addins: [
                 {
                     target: 'express route',
-                    build: function (addin) {
-                        subdivision.services['express'].addRoute(addin.verb, addin.route, addin.handler);
+                    build: function (addin, options) {
+                        options.app[addin.verb](addin.route, addin.handler);
                     }
                 },
                 {
                     target: 'express middleware',
-                    build: function (addin) {
-                        subdivision.services['express'].addMiddleware(addin.handler);
+                    build: function (addin, options) {
+                        options.app.use(addin.handler);
                     }
                 },
                 {
                     target: 'express middleware array',
-                    build: function (addin) {
-                        const expressService = subdivision.services['express'];
+                    build: function (addin, options) {
                         addin.handlers.forEach((handler)=> {
-                            expressService.addMiddleware(handler);
+                            options.app.use(handler);
                         });
+                    }
+                },
+                {
+                    target: 'express router',
+                    build: function (addin, options) {
+                        const router = subdivision.services['express'].buildRouter(addin.routerPath);
+                        options.app.use(addin.route, router);
                     }
                 }
 
