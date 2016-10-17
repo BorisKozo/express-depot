@@ -46,6 +46,17 @@ module.exports = {
                 }
 
             ]
+        },
+        {
+            path: subdivision.systemPaths.conditions,
+            addins: [
+                {
+                    name: 'isDevelopmentCondition',
+                    isValid(){
+                        return process.env['NODE_ENV'] === 'development'
+                    }
+                }
+            ]
         }
     ]
 };

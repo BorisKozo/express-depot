@@ -5,7 +5,7 @@ var express = require('express');
 var subdivision = require('subdivision');
 
 var app = express();
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname,'..'));
 app.set('view engine', 'jade');
 
 module.exports = {
@@ -17,9 +17,10 @@ module.exports = {
                     ? 'pipe ' + addr
                     : 'port ' + addr.port;
                 debug('Building routes');
-                subdivision.build('express/middleware', {app});
+                subdivision.build('express/middleware/start', {app});
                 subdivision.build('express/routes', {app});
                 subdivision.build('express/routers', {app});
+                subdivision.build('express/middleware/end', {app});
                 debug('Listening on ' + bind);
 
                 resolve();
