@@ -24,6 +24,12 @@ module.exports = {
                     }
                 },
                 {
+                    target: 'express static',
+                    build: function (addin) {
+                        expressService.addStaticPath(addin.path);
+                    }
+                },
+                {
                     target: 'express middleware',
                     build: function (addin, options) {
                         options.app.use(addin.handler);
@@ -46,17 +52,7 @@ module.exports = {
                 }
 
             ]
-        },
-        {
-            path: subdivision.systemPaths.conditions,
-            addins: [
-                {
-                    name: 'isDevelopmentCondition',
-                    isValid(){
-                        return process.env['NODE_ENV'] === 'development'
-                    }
-                }
-            ]
         }
+
     ]
 };

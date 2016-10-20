@@ -5,7 +5,7 @@ var express = require('express');
 var subdivision = require('subdivision');
 
 var app = express();
-app.set('views', path.join(__dirname,'..'));
+app.set('views', path.join(__dirname, '..'));
 app.set('view engine', 'jade');
 
 module.exports = {
@@ -81,5 +81,9 @@ module.exports = {
             app: router
         });
         return router;
+    },
+
+    addStaticPath(path){
+        app.use(express.static(path));
     }
 };

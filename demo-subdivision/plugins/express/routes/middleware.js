@@ -9,6 +9,5 @@ module.exports = [
     logger('dev'),
     bodyParser.json(),
     bodyParser.urlencoded({extended: false}),
-    cookieParser(),
-    express.static(path.join(__dirname, '..', '..', '..', 'public'))
+    cookieParser()
 ];
